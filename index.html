@@ -3,8 +3,67 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Your Name</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>Nate Clow</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #0f172a, #1e293b, #334155);
+      font-family: 'Inter', sans-serif;
+      color: #f8fafc;
+      text-align: center;
+      animation: fadeIn 1.5s ease-in-out;
+    }
+
+    main {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 2rem 3rem;
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(8px);
+      transition: transform 0.3s ease;
+    }
+
+    main:hover {
+      transform: translateY(-5px);
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      letter-spacing: 1px;
+    }
+
+    p {
+      font-size: 1.1rem;
+      margin: 0.5rem 0;
+    }
+
+    a {
+      color: #93c5fd;
+      text-decoration: none;
+      margin: 0 0.4rem;
+      transition: color 0.3s ease, transform 0.2s ease;
+    }
+
+    a:hover {
+      color: #38bdf8;
+      transform: scale(1.05);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
 </head>
 <body>
   <main>
@@ -12,8 +71,8 @@
     <p>Mathematics and Economics Student · Researcher</p>
     <p>
       <a href="mailto:nateclow@hotmail.com">Email</a> ·
-      <a href="https://github.com/nateclow">GitHub</a> ·            
-      <a href="https://www.linkedin.com/in/nate-clow-a86739290?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app">LinkedIn</a> ·
+      <a href="https://github.com/nateclow">GitHub</a> ·
+      <a href="https://www.linkedin.com/in/nate-clow-a86739290">LinkedIn</a> ·
       <a href="resume.pdf">Résumé</a>
     </p>
   </main>
