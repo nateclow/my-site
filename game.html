@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eternal Domination Simulator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.26.0/cytoscape.min.js"></script>
+  
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: #fefce8; /* Matches your light yellow */
+      color: #0f172a;
+      display: flex;
+      height: 100vh;
+    }
+    #sidebar {
+      width: 300px;
+      background-color: #e0f2fe; /* Matches your light blue */
+      padding: 2rem;
+      box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+      z-index: 10;
+    }
+    #cy {
+      flex: 1;
+      height: 100%;
+    }
+    h1 { font-size: 1.5rem; margin-top: 0; }
+    p { font-size: 0.9rem; color: #475569; }
+    .control-group { margin-top: 1.5rem; }
+    button {
+      display: block;
+      width: 100%;
+      padding: 0.75rem;
+      margin-bottom: 0.5rem;
+      background-color: #0f172a;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+    button:hover { background-color: #334155; }
+    #status {
+      margin-top: 1.5rem;
+      padding: 1rem;
+      background-color: white;
+      border-radius: 8px;
+      font-weight: 600;
+      text-align: center;
+    }
+    a.back-link {
+      display: inline-block;
+      margin-top: 2rem;
+      color: #0c4a6e;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    a.back-link:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+  <div id="sidebar">
+    <h1>Eternal Domination</h1>
+    <p>Graph: 10-Vertex Strongly Chordal</p>
+    
+    <div id="status">Mode: Place Guards</div>
+    
+    <div class="control-group">
+      <button id="btn-attack">Launch Random Attack</button>
+      <button id="btn-reset">Reset Board</button>
+    </div>
+
+    <p><strong>Rules:</strong><br>1. Click a node to place/remove a guard.<br>2. Click 'Launch Attack' to attack an empty node.<br>3. To defend, click a guard, then click an adjacent node to move it.</p>
+    
+    <a href="index.html" class="back-link">← Back to Portfolio</a>
+  </div>
+
+  <div id="cy"></div>
+
+  <script src="game.js"></script>
+
+</body>
+</html>
