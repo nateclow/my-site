@@ -25,24 +25,34 @@ document.addEventListener('DOMContentLoaded', function() {
       return elements;
     }
 
-    // Function 2: Generate a General Random Connected Graph
+   // Function 2: Generate a General Graph (Guaranteed NOT Strongly Chordal)
     function generateGeneralGraph() {
       let elements = [];
       for (let i = 0; i < 10; i++) {
         elements.push({ data: { id: i.toString() } });
       }
       
-      // Step 1: Create a random spanning tree so the graph is guaranteed to be connected
-      for (let i = 1; i < 10; i++) {
-        let target = Math.floor(Math.random() * i); // Connect to a node that already exists
+      // Step 1: Force a C5 (Chordless Cycle of 5 vertices: 0-1-2-3-4-0).
+      // This mathematically guarantees the graph is NOT chordal.
+      elements.push({ data: { source: '0', target: '1' } });
+      elements.push({ data: { source: '1', target: '2' } });
+      elements.push({ data: { source: '2', target: '3' } });
+      elements.push({ data: { source: '3', target: '4' } });
+      elements.push({ data: { source: '4', target: '0' } });
+      
+      // Step 2: Attach the remaining vertices (5 to 9) to keep the graph connected.
+      for (let i = 5; i < 10; i++) {
+        // Connect each new vertex to at least one previously placed vertex
+        let target = Math.floor(Math.random() * i); 
         elements.push({ data: { source: i.toString(), target: target.toString() } });
       }
       
-      // Step 2: Add random extra edges (30% chance for any pair)
-      for (let i = 0; i < 10; i++) {
-        for (let j = i + 1; j < 10; j++) {
-          if (Math.random() < 0.3) {
-            // Check if edge already exists from the tree step
+      // Step 3: Add a few random edges among the higher vertices to make it messy, 
+      // but avoid adding edges between 0-4 to ensure our C5 remains chordless.
+      for (let i = 5; i < 10; i++) {
+        for (let j = 0; j < 10; j++) {
+          if (i !== j && Math.random() < 0.25) {
+            // Check if edge already exists to avoid duplicates
             let exists = elements.some(e => 
               (e.data.source === i.toString() && e.data.target === j.toString()) || 
               (e.data.source === j.toString() && e.data.target === i.toString())
