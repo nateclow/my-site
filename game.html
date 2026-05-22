@@ -70,12 +70,17 @@
     
     <div id="status">Mode: Place Guards</div>
     
-    <div class="control-group">
+  <div class="control-group">
       <button id="btn-attack">Launch Random Attack</button>
       <button id="btn-reset">Reset Board</button>
-      <button id="btn-new-graph">Generate New Random Graph</button>
+      
+      <select id="graph-type" style="width: 100%; padding: 0.75rem; margin-bottom: 0.5rem; border-radius: 8px; font-family: 'Inter', sans-serif; font-weight: 600; border: 1px solid #cbd5e1;">
+        <option value="strongly-chordal">Strongly Chordal Graph</option>
+        <option value="general">General Random Graph</option>
+      </select>
+      
+      <button id="btn-new-graph">Generate New Graph</button>
     </div>
-
     <p><strong>Rules:</strong><br>1. Click a node to place/remove a guard.<br>2. Click 'Launch Attack' to attack an empty node.<br>3. To defend, click a guard, then click an adjacent node to move it.</p>
     
     <a href="index.html" class="back-link">← Back to Portfolio</a>
