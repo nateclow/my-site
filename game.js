@@ -1,25 +1,20 @@
 document.addEventListener('DOMContentLoaded', function() {
     
-    // Function to generate a random connected Interval Graph (guaranteed Strongly Chordal)
+    // Function 1: Generate a Strongly Chordal Graph (Interval Graph)
     function generateStronglyChordal() {
       let intervals = [];
       let maxEnd = 0;
       
-      // Generate 10 overlapping intervals
       for (let i = 0; i < 10; i++) {
-        let start = i === 0 ? 0 : Math.random() * maxEnd; // Force overlap to ensure the graph is connected
+        let start = i === 0 ? 0 : Math.random() * maxEnd; 
         let end = start + 20 + Math.random() * 30;
         intervals.push({ id: i.toString(), start: start, end: end });
         if (end > maxEnd) maxEnd = end;
       }
       
       let elements = [];
-      // Create Nodes
-      for (let i = 0; i < 10; i++) { 
-        elements.push({ data: { id: intervals[i].id } }); 
-      }
+      for (let i = 0; i < 10; i++) elements.push({ data: { id: intervals[i].id } }); 
       
-      // Create Edges where intervals overlap
       for (let i = 0; i < 10; i++) {
         for (let j = i + 1; j < 10; j++) {
           if (intervals[i].start < intervals[j].end && intervals[j].start < intervals[i].end) {
@@ -29,23 +24,46 @@ document.addEventListener('DOMContentLoaded', function() {
       }
       return elements;
     }
+
+    // Function 2: Generate a General Random Connected Graph
+    function generateGeneralGraph() {
+      let elements = [];
+      for (let i = 0; i < 10; i++) {
+        elements.push({ data: { id: i.toString() } });
+      }
+      
+      // Step 1: Create a random spanning tree so the graph is guaranteed to be connected
+      for (let i = 1; i < 10; i++) {
+        let target = Math.floor(Math.random() * i); // Connect to a node that already exists
+        elements.push({ data: { source: i.toString(), target: target.toString() } });
+      }
+      
+      // Step 2: Add random extra edges (30% chance for any pair)
+      for (let i = 0; i < 10; i++) {
+        for (let j = i + 1; j < 10; j++) {
+          if (Math.random() < 0.3) {
+            // Check if edge already exists from the tree step
+            let exists = elements.some(e => 
+              (e.data.source === i.toString() && e.data.target === j.toString()) || 
+              (e.data.source === j.toString() && e.data.target === i.toString())
+            );
+            if (!exists) {
+              elements.push({ data: { source: i.toString(), target: j.toString() } });
+            }
+          }
+        }
+      }
+      return elements;
+    }
   
-    // Initialize the Graph
+    // Initialize the Graph (Defaults to Strongly Chordal on first load)
     const cy = cytoscape({
       container: document.getElementById('cy'),
-      elements: generateStronglyChordal(), // Call the random generator here
+      elements: generateStronglyChordal(), 
       style: [
         {
           selector: 'node',
-          style: {
-            'background-color': '#94a3b8',
-            'label': 'data(id)',
-            'color': '#fff',
-            'text-valign': 'center',
-            'text-halign': 'center',
-            'width': 40,
-            'height': 40
-          }
+          style: { 'background-color': '#94a3b8', 'label': 'data(id)', 'color': '#fff', 'text-valign': 'center', 'text-halign': 'center', 'width': 40, 'height': 40 }
         },
         {
           selector: 'edge',
@@ -130,10 +148,19 @@ document.addEventListener('DOMContentLoaded', function() {
       statusEl.innerText = "Mode: Place Guards";
     });
 
-    // New Random Graph Button
+    // New Random Graph Button (Now checks the dropdown!)
     document.getElementById('btn-new-graph').addEventListener('click', () => {
+      const graphType = document.getElementById('graph-type').value;
+      
       cy.elements().remove(); // Clear old graph
-      cy.add(generateStronglyChordal()); // Generate and add new one
+      
+      // Inject the correct math based on the dropdown
+      if (graphType === 'strongly-chordal') {
+        cy.add(generateStronglyChordal());
+      } else if (graphType === 'general') {
+        cy.add(generateGeneralGraph());
+      }
+      
       cy.layout({ name: 'cose', padding: 50 }).run(); // Rerun the physics layout
       
       mode = 'setup';
