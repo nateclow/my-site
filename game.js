@@ -1,23 +1,39 @@
 document.addEventListener('DOMContentLoaded', function() {
     
-    // Initialize the Graph (A 10-vertex strongly chordal graph)
+    // Function to generate a random connected Interval Graph (guaranteed Strongly Chordal)
+    function generateStronglyChordal() {
+      let intervals = [];
+      let maxEnd = 0;
+      
+      // Generate 10 overlapping intervals
+      for (let i = 0; i < 10; i++) {
+        let start = i === 0 ? 0 : Math.random() * maxEnd; // Force overlap to ensure the graph is connected
+        let end = start + 20 + Math.random() * 30;
+        intervals.push({ id: i.toString(), start: start, end: end });
+        if (end > maxEnd) maxEnd = end;
+      }
+      
+      let elements = [];
+      // Create Nodes
+      for (let i = 0; i < 10; i++) { 
+        elements.push({ data: { id: intervals[i].id } }); 
+      }
+      
+      // Create Edges where intervals overlap
+      for (let i = 0; i < 10; i++) {
+        for (let j = i + 1; j < 10; j++) {
+          if (intervals[i].start < intervals[j].end && intervals[j].start < intervals[i].end) {
+            elements.push({ data: { source: intervals[i].id, target: intervals[j].id } });
+          }
+        }
+      }
+      return elements;
+    }
+  
+    // Initialize the Graph
     const cy = cytoscape({
       container: document.getElementById('cy'),
-      
-      elements: [
-        // 10 Vertices
-        { data: { id: '0' } }, { data: { id: '1' } }, { data: { id: '2' } },
-        { data: { id: '3' } }, { data: { id: '4' } }, { data: { id: '5' } },
-        { data: { id: '6' } }, { data: { id: '7' } }, { data: { id: '8' } },
-        { data: { id: '9' } },
-        // Edges creating a strongly chordal structure
-        { data: { source: '0', target: '1' } }, { data: { source: '0', target: '2' } },
-        { data: { source: '0', target: '3' } }, { data: { source: '1', target: '2' } },
-        { data: { source: '1', target: '4' } }, { data: { source: '2', target: '5' } },
-        { data: { source: '3', target: '6' } }, { data: { source: '4', target: '7' } },
-        { data: { source: '5', target: '8' } }, { data: { source: '6', target: '9' } }
-      ],
-  
+      elements: generateStronglyChordal(), // Call the random generator here
       style: [
         {
           selector: 'node',
@@ -33,44 +49,27 @@ document.addEventListener('DOMContentLoaded', function() {
         },
         {
           selector: 'edge',
-          style: {
-            'width': 3,
-            'line-color': '#cbd5e1'
-          }
+          style: { 'width': 3, 'line-color': '#cbd5e1' }
         },
         {
           selector: '.guard',
-          style: {
-            'background-color': '#0ea5e9', // Blue for guards
-            'border-width': 4,
-            'border-color': '#0284c7'
-          }
+          style: { 'background-color': '#0ea5e9', 'border-width': 4, 'border-color': '#0284c7' }
         },
         {
           selector: '.attacked',
-          style: {
-            'background-color': '#ef4444', // Red for attack
-            'border-width': 4,
-            'border-color': '#b91c1c'
-          }
+          style: { 'background-color': '#ef4444', 'border-width': 4, 'border-color': '#b91c1c' }
         },
         {
           selector: '.selected-guard',
-          style: {
-            'background-color': '#f59e0b', // Orange when moving
-          }
+          style: { 'background-color': '#f59e0b' }
         }
       ],
-      layout: {
-        name: 'cose', // Physics-based layout to make it look nice
-        padding: 50
-      }
+      layout: { name: 'cose', padding: 50 }
     });
   
     // Game State
-    let mode = 'setup'; // setup, defending
+    let mode = 'setup'; 
     let selectedGuard = null;
-  
     const statusEl = document.getElementById('status');
   
     // Node Click Logic
@@ -78,24 +77,19 @@ document.addEventListener('DOMContentLoaded', function() {
       const node = evt.target;
   
       if (mode === 'setup') {
-        // Toggle guard placement
         if (node.hasClass('guard')) {
           node.removeClass('guard');
         } else {
           node.addClass('guard');
         }
       } 
-      
       else if (mode === 'defending') {
-        // Step 1: Select a guard to move
         if (node.hasClass('guard') && !selectedGuard) {
           selectedGuard = node;
           node.addClass('selected-guard');
           statusEl.innerText = "Guard Selected. Click target node to move.";
         } 
-        // Step 2: Move the selected guard
         else if (selectedGuard) {
-          // Check if target is adjacent or the same node
           const isAdjacent = cy.edges(`[source = "${selectedGuard.id()}"][target = "${node.id()}"], [source = "${node.id()}"][target = "${selectedGuard.id()}"]`).length > 0;
           
           if (isAdjacent || selectedGuard.id() === node.id()) {
@@ -117,27 +111,34 @@ document.addEventListener('DOMContentLoaded', function() {
   
     // Attack Button Logic
     document.getElementById('btn-attack').addEventListener('click', () => {
-      // Find all nodes without guards
       const emptyNodes = cy.nodes().filter(n => !n.hasClass('guard'));
       if (emptyNodes.length === 0) {
         statusEl.innerText = "All nodes are guarded!";
         return;
       }
-      
-      // Pick a random empty node
       const randomNode = emptyNodes[Math.floor(Math.random() * emptyNodes.length)];
       randomNode.addClass('attacked');
-      
       mode = 'defending';
       statusEl.innerText = "ATTACKED! Click a Guard to move it.";
     });
   
-    // Reset Button Logic
+    // Reset Board Button
     document.getElementById('btn-reset').addEventListener('click', () => {
       cy.nodes().removeClass('guard').removeClass('attacked').removeClass('selected-guard');
       mode = 'setup';
       selectedGuard = null;
       statusEl.innerText = "Mode: Place Guards";
+    });
+
+    // New Random Graph Button
+    document.getElementById('btn-new-graph').addEventListener('click', () => {
+      cy.elements().remove(); // Clear old graph
+      cy.add(generateStronglyChordal()); // Generate and add new one
+      cy.layout({ name: 'cose', padding: 50 }).run(); // Rerun the physics layout
+      
+      mode = 'setup';
+      selectedGuard = null;
+      statusEl.innerText = "New Graph Generated. Place Guards.";
     });
   
   });
