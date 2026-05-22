@@ -4,77 +4,102 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Nate Clow</title>
-
-  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-
   <style>
     body {
       margin: 0;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: linear-gradient(135deg, #0f172a, #1e293b, #334155);
+      padding: 0;
       font-family: 'Inter', sans-serif;
-      color: #f8fafc;
-      text-align: center;
-      animation: fadeIn 1.5s ease-in-out;
+      display: flex;
+      height: 100vh;
+      background-color: #fefce8; /* Light Yellow Background */
+      color: #333;
     }
 
-    main {
-      background: rgba(255, 255, 255, 0.05);
-      padding: 2rem 3rem;
-      border-radius: 20px;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-      backdrop-filter: blur(8px);
-      transition: transform 0.3s ease;
+    /* Sidebar Styling (Light Blue) */
+    aside {
+      width: 250px;
+      background-color: #e0f2fe; /* Light Blue Background */
+      padding: 2rem 1rem;
+      box-shadow: 2px 0 5px rgba(0,0,0,0.05);
+      display: flex;
+      flex-direction: column;
     }
 
-    main:hover {
-      transform: translateY(-5px);
-    }
-
-    h1 {
-      font-size: 2.5rem;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
+    aside h2 {
+      font-size: 1.2rem;
+      text-transform: uppercase;
       letter-spacing: 1px;
+      margin-top: 0;
+      margin-bottom: 1.5rem;
+      color: #0f172a;
+      padding-left: 1rem;
     }
 
-    p {
-      font-size: 1.1rem;
-      margin: 0.5rem 0;
+    aside ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
     }
 
-    a {
-      color: #93c5fd;
+    aside li {
+      margin-bottom: 0.5rem;
+    }
+
+    aside a {
+      display: block;
+      padding: 0.75rem 1rem;
+      color: #1e293b;
       text-decoration: none;
-      margin: 0 0.4rem;
-      transition: color 0.3s ease, transform 0.2s ease;
+      border-radius: 8px;
+      transition: background-color 0.2s, color 0.2s;
     }
 
-    a:hover {
-      color: #38bdf8;
-      transform: scale(1.05);
+    aside a:hover {
+      background-color: #bae6fd; /* Slightly darker blue on hover */
+      color: #0c4a6e;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
+    /* Main Content Styling */
+    main {
+      flex: 1;
+      padding: 4rem;
+      overflow-y: auto;
+    }
+
+    main h1 {
+      font-size: 3rem;
+      margin-top: 0;
+      margin-bottom: 0.5rem;
+      color: #0f172a;
+    }
+
+    main p {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      max-width: 800px;
+      color: #475569;
     }
   </style>
 </head>
 <body>
+
+  <aside>
+    <h2>Directory</h2>
+    <ul>
+      <li><a href="mailto:nateclow@hotmail.com">Email</a></li>
+      <li><a href="https://github.com/nateclow">GitHub</a></li>
+      <li><a href="https://www.linkedin.com/in/nate-clow-a86739290">LinkedIn</a></li>
+      <li><a href="resume.pdf">Résumé</a></li>
+      <li><a href="#">Link 5 Placeholder</a></li>
+    </ul>
+  </aside>
+
   <main>
     <h1>Nate Clow</h1>
-    <p>Mathematics and Economics Student · Researcher</p>
-    <p>
-      <a href="mailto:nateclow@hotmail.com">Email</a> ·
-      <a href="https://github.com/nateclow">GitHub</a> ·
-      <a href="https://www.linkedin.com/in/nate-clow-a86739290">LinkedIn</a> ·
-      <a href="resume.pdf">Résumé</a>
-    </p>
+    <p><strong>Mathematics and Economics Student · Researcher</strong></p>
+    <p>Welcome to my personal site. Feel free to use the directory on the left to view my work, check out my resume, or get in touch.</p>
   </main>
+
 </body>
 </html>
