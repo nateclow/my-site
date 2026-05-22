@@ -1,345 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nate Clow — Academic & Research Portfolio</title>
-  
-  <!-- FontAwesome for symbols/icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nate Clow</title>
+
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lato:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
   <style>
-    /* Base Read-The-Docs Theming Variables */
-    :root {
-      --sidebar-bg: #343131;
-      --sidebar-accent: #2980b9;
-      --sidebar-text: #b3b3b3;
-      --text-color: #404040;
-      --bg-color: #fcfcfc;
-      --link-color: #2980b9;
-      --hr-color: #e1e4e6;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
     body {
       margin: 0;
-      padding: 0;
-      font-family: "Lato", "proxima-nova", "Helvetica Neue", Arial, sans-serif;
-      color: var(--text-color);
-      background-color: var(--bg-color);
+      height: 100vh;
       display: flex;
-      min-height: 100vh;
-    }
-
-    /* Mobile Header Navigation Trigger */
-    .mobile-header {
-      display: none;
-      background: var(--sidebar-bg);
-      color: #fff;
-      padding: 10px 15px;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      z-index: 1000;
+      justify-content: center;
       align-items: center;
-    }
-    .mobile-header i {
-      font-size: 1.2rem;
-      cursor: pointer;
-      margin-right: 15px;
-    }
-    .mobile-header a {
-      color: #fff;
-      text-decoration: none;
-      font-weight: bold;
-    }
-
-    /* Left Sidebar Navigation Layout */
-    aside {
-      width: 300px;
-      background: var(--sidebar-bg);
-      position: fixed;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      overflow-y: auto;
-      z-index: 10;
-    }
-
-    .sidebar-search {
-      padding: 20px 15px;
+      background: linear-gradient(135deg, #0f172a, #1e293b, #334155);
+      font-family: 'Inter', sans-serif;
+      color: #f8fafc;
       text-align: center;
-      background: #242222;
+      animation: fadeIn 1.5s ease-in-out;
     }
 
-    .sidebar-search a {
-      color: #fff;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 1.2rem;
-      font-family: "Inter", sans-serif;
-    }
-
-    .toctree-caption {
-      color: #555;
-      background: #e9e9e9;
-      font-size: 0.85rem;
-      font-weight: bold;
-      padding: 6px 20px;
-      margin: 0;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .sidebar-menu ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    .sidebar-menu li a {
-      display: block;
-      padding: 10px 20px;
-      color: var(--sidebar-text);
-      text-decoration: none;
-      font-size: 0.9rem;
-      border-bottom: 1px solid #3d3a3a;
-      transition: background 0.2s, color 0.2s;
-    }
-
-    .sidebar-menu li a:hover, .sidebar-menu li.active a {
-      background: #292727;
-      color: #fff;
-    }
-    
-    .sidebar-menu li.active a {
-      border-left: 4px solid var(--sidebar-accent);
-    }
-
-    /* Main Content Area Layout */
     main {
-      margin-left: 300px;
-      padding: 30px 50px;
-      flex: 1;
-      max-width: 900px;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 2rem 3rem;
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(8px);
+      transition: transform 0.3s ease;
     }
 
-    /* Breadcrumbs navigation strip */
-    .breadcrumbs-nav {
-      font-size: 0.9rem;
-      color: #999;
-      margin-bottom: 15px;
-      display: flex;
-      justify-content: space-between;
-    }
-    .breadcrumbs-nav a {
-      color: var(--link-color);
-      text-decoration: none;
-    }
-    .breadcrumbs-nav i {
-      margin-right: 5px;
+    main:hover {
+      transform: translateY(-5px);
     }
 
-    hr {
-      border: 0;
-      border-top: 1px solid var(--hr-color);
-      margin: 20px 0;
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      letter-spacing: 1px;
     }
-
-    /* Content Typography & Elements */
-    h1, h2, h3, h4 {
-      font-family: "Inter", sans-serif;
-      color: #2c3e50;
-      font-weight: 600;
-      margin-top: 24px;
-      margin-bottom: 16px;
-    }
-
-    h1 { font-size: 2.2rem; margin-top: 0; border-bottom: 1px solid var(--hr-color); padding-bottom: 10px;}
-    h2 { font-size: 1.6rem; border-bottom: 1px solid var(--hr-color); padding-bottom: 5px;}
-    h3 { font-size: 1.3rem; }
 
     p {
-      line-height: 1.7;
-      font-size: 1.05rem;
-      margin-bottom: 1.25rem;
+      font-size: 1.1rem;
+      margin: 0.5rem 0;
     }
 
     a {
-      color: var(--link-color);
+      color: #93c5fd;
       text-decoration: none;
+      margin: 0 0.4rem;
+      transition: color 0.3s ease, transform 0.2s ease;
     }
+
     a:hover {
-      text-decoration: underline;
+      color: #38bdf8;
+      transform: scale(1.05);
     }
 
-    ul {
-      line-height: 1.6;
-      margin-bottom: 1.25rem;
-      padding-left: 30px;
-    }
-
-    li {
-      margin-bottom: 5px;
-    }
-
-    /* Footer Buttons Navigation style */
-    footer {
-      margin-top: 40px;
-      padding-top: 20px;
-      border-top: 1px solid var(--hr-color);
-    }
-
-    .footer-buttons {
-      display: flex;
-      justify-content: flex-end;
-      margin-bottom: 20px;
-    }
-
-    .btn-next {
-      background: #f3f6f6;
-      border: 1px solid #d6d6d6;
-      color: #555;
-      padding: 8px 14px;
-      border-radius: 3px;
-      font-size: 0.9rem;
-      font-weight: bold;
-      transition: background 0.2s;
-    }
-    .btn-next:hover {
-      background: #e5e5e5;
-      text-decoration: none;
-    }
-
-    .copyright {
-      font-size: 0.85rem;
-      color: #999;
-    }
-
-    /* Responsive Adaptation for smaller viewports */
-    @media (max-width: 768px) {
-      .mobile-header {
-        display: flex;
-      }
-      aside {
-        left: -300px;
-        top: 42px;
-        transition: left 0.3s;
-      }
-      aside.open {
-        left: 0;
-      }
-      main {
-        margin-left: 0;
-        padding: 70px 20px 20px 20px;
-      }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
 <body>
-
-  <!-- Mobile Top Nav Bar -->
-  <div class="mobile-header">
-    <i class="fa fa-bars" id="menuToggle"></i>
-    <a href="#">Nate Clow</a>
-  </div>
-
-  <!-- Left Documentation Sidebar Layout -->
-  <aside id="sidebar">
-    <div class="sidebar-search">
-      <a href="#">Nate Clow</a>
-    </div>
-    <div class="sidebar-menu">
-      <p class="toctree-caption">Overview</p>
-      <ul>
-        <li class="active"><a href="#welcome">Welcome & Bio</a></li>
-        <li><a href="#research">Research Interests</a></li>
-        <li><a href="#education">Education Details</a></li>
-      </ul>
-
-      <p class="toctree-caption">Connect & Info</p>
-      <ul>
-        <li><a href="mailto:nateclow@hotmail.com"><i class="fa fa-envelope"></i> Email</a></li>
-        <li><a href="https://github.com/nateclow" target="_blank"><i class="fab fa-github"></i> GitHub</a></li>
-        <li><a href="https://www.linkedin.com/in/nate-clow-a86739290" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a></li>
-        <li><a href="resume.pdf" target="_blank"><i class="fa fa-file-pdf"></i> Résumé</a></li>
-      </ul>
-    </div>
-  </aside>
-
-  <!-- Right Main Information Segment -->
   <main>
-    <!-- Breadcrumb Row -->
-    <div class="breadcrumbs-nav">
-      <div>
-        <a href="#"><i class="fa fa-home"></i></a> &raquo; Welcome to Nate's Portfolio
-      </div>
-      <div>
-        <a href="#" rel="nofollow">View page source</a>
-      </div>
-    </div>
-    
-    <hr>
-
-    <!-- Main Content Panel -->
-    <section id="welcome">
-      <h1>Welcome to Nate Clow's Academic Portfolio</h1>
-      <p>I am a Mathematics and Economics student and researcher focused on solving complex analytical problems at the intersection of economic theory and mathematical modeling.</p>
-    </section>
-
-    <section id="research">
-      <h2>Research & Work</h2>
-      <p>As a researcher, I look at utilizing quantitative methodologies to analyze economic systems and market dynamics.</p>
-      
-      <h3>Current Focus Areas</h3>
-      <ul>
-        <li>Quantitative Economics and data modeling</li>
-        <li>Applied Statistics and Predictive Analytics</li>
-        <li>Resource allocation modeling</li>
-      </ul>
-    </section>
-
-    <section id="education">
-      <h2>Education</h2>
-      <ul>
-        <li><strong>Undergraduate Studies</strong> in Mathematics & Economics</li>
-        <li>Extensive coursework in advanced calculus, statistical inference, micro/macroeconomic theory, and econometric metrics.</li>
-      </ul>
-    </section>
-
-    <!-- Page Footer Block -->
-    <footer>
-      <div class="footer-buttons">
-        <a href="#research" class="btn-next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      </div>
-      <hr>
-      <div class="copyright">
-        &copy; Copyright 2026, Nate Clow. Powered by custom Sphinx-styled HTML.
-      </div>
-    </footer>
+    <h1>Nate Clow</h1>
+    <p>Mathematics and Economics Student · Researcher</p>
+    <p>
+      <a href="mailto:nateclow@hotmail.com">Email</a> ·
+      <a href="https://github.com/nateclow">GitHub</a> ·
+      <a href="https://www.linkedin.com/in/nate-clow-a86739290">LinkedIn</a> ·
+      <a href="resume.pdf">Résumé</a>
+    </p>
   </main>
-
-  <!-- Simple Toggle Logic script for Responsive Devices -->
-  <script>
-    const toggle = document.getElementById('menuToggle');
-    const sidebar = document.getElementById('sidebar');
-    
-    toggle.addEventListener('click', () => {
-      sidebar.classList.toggle('open');
-    });
-
-    // Close menu when clicking layout link on mobile viewports
-    document.querySelectorAll('.sidebar-menu a').forEach(link => {
-      link.addEventListener('click', () => {
-        sidebar.classList.remove('open');
-      });
-    });
-  </script>
 </body>
 </html>
