@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiet Pond - Line Art Fishing</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+            color: #0f172a;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+        #sidebar {
+            width: 320px;
+            background-color: #ffffff;
+            padding: 2rem;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.05);
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            border-right: 2px solid #000;
+        }
+        #game-container {
+            flex: 1;
+            height: 100%;
+            background-color: #ffffff;
+            position: relative;
+        }
+        canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+        h1 { font-size: 1.5rem; margin-top: 0; font-weight: 600; letter-spacing: -0.5px; }
+        p { font-size: 0.9rem; color: #475569; line-height: 1.4; }
+        .control-group { margin-top: 1rem; }
+        
+        button {
+            display: block;
+            width: 100%;
+            padding: 0.85rem;
+            margin-bottom: 0.75rem;
+            background-color: #000000;
+            color: #ffffff;
+            border: 2px solid #000000;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.15s ease;
+        }
+        button:hover { 
+            background-color: #ffffff; 
+            color: #000000; 
+        }
+        button:disabled {
+            background-color: #cccccc;
+            border-color: #cccccc;
+            cursor: not-allowed;
+            color: #666666;
+        }
+        #status {
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: #f1f5f9;
+            border: 2px solid #000;
+            border-radius: 8px;
+            font-weight: 600;
+            text-align: center;
+            min-height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #inventory-container {
+            margin-top: 1.5rem;
+            flex: 1;
+            overflow-y: auto;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 1rem;
+        }
+        .fish-item {
+            font-size: 0.85rem;
+            padding: 0.5rem 0;
+            border-bottom: 1px dashed #cbd5e1;
+            display: flex;
+            justify-content: space-between;
+        }
+        .rarity-Common { color: #475569; }
+        .rarity-Rare { font-weight: 600; color: #000; }
+        .rarity-Legendary { font-weight: 600; text-decoration: underline; color: #000; }
+        
+        a.back-link {
+            display: inline-block;
+            margin-top: 1.5rem;
+            color: #000;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        a.back-link:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div id="sidebar">
+        <h1>Quiet Pond</h1>
+        <p>A minimalist line-art fishing simulator. Click the pond or use the controls below to cast your line.</p>
+        
+        <div id="status">Ready to fish!</div>
+        
+        <div class="control-group">
+            <button id="btn-cast">Cast Line</button>
+            <button id="btn-reel" disabled>Reel In!</button>
+        </div>
+
+        <div id="inventory-container">
+            <strong>Catch Log (<span id="catch-count">0</span>):</strong>
+            <div id="inventory-list"></div>
+        </div>
+
+        <a href="index.html" class="back-link">← Back to Portfolio</a>
+    </div>
+    
+    <div id="game-container">
+        <canvas id="pondCanvas"></canvas>
+    </div>
+
+    <script src="fishing.js"></script>
+</body>
+</html>
