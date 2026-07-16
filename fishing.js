@@ -1,18 +1,19 @@
 // --- FISH DATABASE (10 Fish, 3 Rarities) ---
 const FISH_CATALOG = [
     // Common (50% overall chance)
-    { name: "Pond Minnow", rarity: "Common", prob: 0.20 },
-    { name: "Speckled Trout", rarity: "Common", prob: 0.15 },
-    { name: "Muddy Carp", rarity: "Common", prob: 0.15 },
-    { name: "Sunfish", rarity: "Common", prob: 0.15 },
-    { name: "Reed Perch", rarity: "Common", prob: 0.15 },
-    // Rare (35% overall chance)
-    { name: "Whiskered Catfish", rarity: "Rare", prob: 0.08 },
+    { name: "Pond Minnow", rarity: "Common", prob: 0.14 },
+    { name: "Speckled Trout", rarity: "Common", prob: 0.14 },
+    { name: "Muddy Carp", rarity: "Common", prob: 0.14 },
+    { name: "Sunfish", rarity: "Common", prob: 0.14 },
+    { name: "Reed Perch", rarity: "Common", prob: 0.14 },
+  
+    { name: "Whiskered Catfish", rarity: "Rare", prob: 0.07 },
     { name: "Silver Pike", rarity: "Rare", prob: 0.07 },
-    { name: "Ghost Koi", rarity: "Rare", prob: 0.05 },
-    // Legendary (15% overall chance)
-    { name: "Golden Sturgeon", rarity: "Legendary", prob: 0.03 },
-    { name: "Moonlit Leviathan", rarity: "Legendary", prob: 0.02 }
+    { name: "Ghost Koi", rarity: "Rare", prob: 0.07 },
+    
+    { name: "Golden Sturgeon", rarity: "Legendary", prob: 0.05 },
+    { name: "Moonlit Leviathan", rarity: "Legendary", prob: 0.03 }
+    { name: "Fin Whale". rarity: "Legendary", prob: 0.01}
 ];
 
 // --- GAME STATE ---
