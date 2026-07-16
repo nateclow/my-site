@@ -13,7 +13,7 @@ const FISH_CATALOG = [
     
     { name: "Golden Sturgeon", rarity: "Legendary", prob: 0.05 },
     { name: "Moonlit Leviathan", rarity: "Legendary", prob: 0.03 },
-    { name: "Fin Whale". rarity: "Legendary", prob: 0.01}
+    { name: "Fin Whale", rarity: "Legendary", prob: 0.01}
 ];
 
 // --- GAME STATE ---
