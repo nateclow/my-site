@@ -1,6 +1,6 @@
 body {
-  background: #1a1a1a;       /* Deep black-grey for a solid base */
-  color: #e0e0e0;            /* Soft white for text readability */
+  background: #1a1a1a;       
+  color: #e0e0e0;            
   font-family: Georgia, serif;
   text-align: center;
   padding: 100px 20px;
@@ -8,12 +8,12 @@ body {
 }
 
 a {
-  color: #a68dad;            /* Calm purple for links */
+  color: #a68dad;
   text-decoration: none;
   margin: 0 5px;
 }
 
 a:hover {
   text-decoration: underline;
-  color: #d9534f;            /* Vibrant red for hover interaction */
+  color: #d9534f;
 }
