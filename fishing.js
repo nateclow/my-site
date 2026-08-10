@@ -1,6 +1,5 @@
-// --- FISH DATABASE (10 Fish, 3 Rarities) ---
+
 const FISH_CATALOG = [
-    // Common (50% overall chance)
     { name: "Pond Minnow", rarity: "Common", prob: 0.14 },
     { name: "Speckled Trout", rarity: "Common", prob: 0.14 },
     { name: "Muddy Carp", rarity: "Common", prob: 0.14 },
@@ -16,13 +15,12 @@ const FISH_CATALOG = [
     { name: "Fin Whale", rarity: "Legendary", prob: 0.01}
 ];
 
-// --- GAME STATE ---
-let state = "IDLE"; // IDLE, CASTING, WAITING, BITING
+
+let state = "IDLE"; 
 let castTimer = null;
 let biteTimer = null;
 let catches = [];
 
-// --- CANVAS SETUP ---
 const canvas = document.getElementById('pondCanvas');
 const ctx = canvas.getContext('2d');
 let width, height;
@@ -36,12 +34,12 @@ function resizeCanvas() {
 window.addEventListener('resize', resizeCanvas);
 resizeCanvas();
 
-// --- ANIMATION VARIABLES ---
+
 let ripples = [];
 let swimmingFish = [];
 let bobber = { x: 0, y: 0, targetX: 0, targetY: 0, active: false };
 
-// Initialize background swimming fish silhouettes
+
 for (let i = 0; i < 8; i++) {
     swimmingFish.push({
         x: Math.random() * 800,
@@ -51,14 +49,14 @@ for (let i = 0; i < 8; i++) {
     });
 }
 
-// --- DOM ELEMENTS ---
+
 const btnCast = document.getElementById('btn-cast');
 const btnReel = document.getElementById('btn-reel');
 const statusEl = document.getElementById('status');
 const inventoryList = document.getElementById('inventory-list');
 const catchCountEl = document.getElementById('catch-count');
 
-// --- EVENT LISTENERS ---
+
 btnCast.addEventListener('click', castLine);
 btnReel.addEventListener('click', reelIn);
 canvas.addEventListener('click', () => {
@@ -66,7 +64,7 @@ canvas.addEventListener('click', () => {
     else if (state === "BITING" || state === "WAITING") reelIn();
 });
 
-// --- GAME LOGIC ---
+
 function castLine() {
     if (state !== "IDLE") return;
     
@@ -75,22 +73,21 @@ function castLine() {
     btnCast.disabled = true;
     btnReel.disabled = false;
 
-    // Set bobber target out in the pond
+
     bobber.targetX = width * 0.4 + Math.random() * (width * 0.4);
     bobber.targetY = height * 0.5 + Math.random() * (height * 0.3);
-    bobber.x = width * 0.18; // Starts at rod tip
+    bobber.x = width * 0.18; 
     bobber.y = height * 0.45;
     bobber.active = true;
 
-    // Animate cast delay
+
     setTimeout(() => {
         state = "WAITING";
         statusEl.innerText = ". . . Waiting for a bite . . .";
         
-        // Add ripple where bobber lands
+        
         ripples.push({ x: bobber.targetX, y: bobber.targetY, radius: 5, maxRadius: 40, alpha: 1 });
 
-        // Random bite time between 2 and 6 seconds
         const waitTime = 2000 + Math.random() * 4000;
         castTimer = setTimeout(triggerBite, waitTime);
     }, 600);
@@ -101,7 +98,7 @@ function triggerBite() {
     state = "BITING";
     statusEl.innerText = "❗ FISH ON! REEL IT IN! ❗";
     
-    // Frantic ripples
+
     for(let i=0; i<3; i++) {
         setTimeout(() => {
             if(bobber.active) {
@@ -110,7 +107,6 @@ function triggerBite() {
         }, i * 300);
     }
 
-    // You have 2.5 seconds to reel it in before it escapes
     biteTimer = setTimeout(() => {
         if (state === "BITING") {
             statusEl.innerText = "The fish got away...";
@@ -151,7 +147,7 @@ function selectFish() {
         cumulative += fish.prob;
         if (rand <= cumulative) return fish;
     }
-    return FISH_CATALOG[0]; // Fallback
+    return FISH_CATALOG[0];
 }
 
 function updateInventory(fish) {
@@ -162,7 +158,7 @@ function updateInventory(fish) {
     inventoryList.prepend(item);
 }
 
-// --- RENDER LOOP (The Black & White Line Art) ---
+
 function draw() {
     ctx.clearRect(0, 0, width, height);
     
@@ -182,13 +178,13 @@ function draw() {
 }
 
 function drawPond() {
-    // Horizon / Bank Line
+    
     ctx.beginPath();
     ctx.moveTo(0, height * 0.4);
     ctx.bezierCurveTo(width * 0.3, height * 0.45, width * 0.7, height * 0.35, width, height * 0.4);
     ctx.stroke();
 
-    // Decorative Water Lines
+    
     ctx.lineWidth = 1;
     for (let i = 1; i <= 4; i++) {
         ctx.beginPath();
@@ -204,14 +200,14 @@ function drawSwimmingFish() {
     ctx.lineWidth = 1.5;
     swimmingFish.forEach(fish => {
         fish.x += fish.speed;
-        if (fish.x > width + 50) fish.x = -50; // Loop around
+        if (fish.x > width + 50) fish.x = -50; 
 
-        // Only draw if below the water line
+        
         if (fish.y > height * 0.45) {
             ctx.save();
             ctx.translate(fish.x, fish.y);
             
-            // Draw simple minimalist fish outline
+      
             ctx.beginPath();
             ctx.ellipse(0, 0, fish.size, fish.size * 0.4, 0, 0, Math.PI * 2);
             ctx.moveTo(-fish.size, 0);
@@ -252,37 +248,36 @@ function drawFisherman() {
     const baseX = width * 0.12;
     const baseY = height * 0.42;
 
-    // Little Dock / Bank overhang
+
     ctx.beginPath();
     ctx.moveTo(0, baseY + 20);
     ctx.lineTo(baseX + 30, baseY + 20);
     ctx.lineTo(baseX + 20, height);
     ctx.stroke();
 
-    // Body (Sitting stick figure)
+
     ctx.beginPath();
-    ctx.moveTo(baseX, baseY - 40); // Torso top
-    ctx.lineTo(baseX, baseY);      // Hips
-    ctx.lineTo(baseX + 20, baseY); // Upper legs
-    ctx.lineTo(baseX + 20, baseY + 25); // Lower legs
+    ctx.moveTo(baseX, baseY - 40); 
+    ctx.lineTo(baseX, baseY);      
+    ctx.lineTo(baseX + 20, baseY); 
+    ctx.lineTo(baseX + 20, baseY + 25); 
     ctx.stroke();
 
-    // Head
+   
     ctx.beginPath();
     ctx.arc(baseX, baseY - 50, 10, 0, Math.PI * 2);
     ctx.stroke();
 
-    // The Hat (Cute bucket/triangle fisherman hat)
     ctx.beginPath();
     ctx.moveTo(-18 + baseX, baseY - 55);
-    ctx.lineTo(18 + baseX, baseY - 55); // Hat brim
+    ctx.lineTo(18 + baseX, baseY - 55); 
     ctx.moveTo(-10 + baseX, baseY - 55);
-    ctx.lineTo(-5 + baseX, baseY - 68); // Crown
+    ctx.lineTo(-5 + baseX, baseY - 68); 
     ctx.lineTo(5 + baseX, baseY - 68);
     ctx.lineTo(10 + baseX, baseY - 55);
     ctx.stroke();
 
-    // Arms holding the rod
+    
     ctx.beginPath();
     ctx.moveTo(baseX, baseY - 35);
     ctx.lineTo(baseX + 15, baseY - 25);
@@ -296,57 +291,56 @@ function drawRodAndLine() {
     const rodTipX = width * 0.22;
     const rodTipY = height * 0.42 - 80;
 
-    // Fishing Rod
+  
     ctx.lineWidth = 3;
     ctx.beginPath();
     ctx.moveTo(rodHoldX - 10, rodHoldY + 10);
     ctx.lineTo(rodTipX, rodTipY);
     ctx.stroke();
 
-    // Fishing Reel (Little circle on the rod)
     ctx.lineWidth = 2;
     ctx.beginPath();
     ctx.arc(rodHoldX, rodHoldY + 3, 5, 0, Math.PI * 2);
     ctx.stroke();
-    // Reel handle
+  
     ctx.beginPath();
     ctx.moveTo(rodHoldX, rodHoldY + 3);
     ctx.lineTo(rodHoldX + 6, rodHoldY + 8);
     ctx.stroke();
 
-    // Fishing Line & Bobber
+
     if (bobber.active) {
-        // Smoothly animate bobber toward target during cast
+        
         if (state === "CASTING") {
             bobber.x += (bobber.targetX - bobber.x) * 0.1;
             bobber.y += (bobber.targetY - bobber.y) * 0.1;
         } else {
             bobber.x = bobber.targetX;
-            // Add a little floating bob motion
+            
             bobber.y = bobber.targetY + Math.sin(Date.now() * 0.005) * 3;
         }
 
-        // Draw Line
+
         ctx.lineWidth = 1;
         ctx.beginPath();
         ctx.moveTo(rodTipX, rodTipY);
         ctx.quadraticCurveTo((rodTipX + bobber.x) / 2, rodTipY + 20, bobber.x, bobber.y);
         ctx.stroke();
 
-        // Draw Bobber (half black, half white circle)
+    
         ctx.lineWidth = 2;
         ctx.beginPath();
         ctx.arc(bobber.x, bobber.y, 6, 0, Math.PI, true);
-        ctx.fill(); // Top half filled black
+        ctx.fill();
         ctx.stroke();
         
         ctx.beginPath();
         ctx.arc(bobber.x, bobber.y, 6, 0, Math.PI, false);
         ctx.fillStyle = '#ffffff';
-        ctx.fill(); // Bottom half white
+        ctx.fill(); 
         ctx.stroke();
 
-        // Draw Exclamation Mark if Biting!
+     
         if (state === "BITING") {
             ctx.fillStyle = '#000000';
             ctx.font = 'bold 20px Inter, sans-serif';
@@ -355,5 +349,5 @@ function drawRodAndLine() {
     }
 }
 
-// Start Animation Loop
+
 draw();
